@@ -14,3 +14,7 @@ class EntryViewModel(private val repositoriSiswa: RepositoriSiswa): ViewModel() 
             nama.isNotBlank() && alamat.isNotBlank() && telpon.isNotBlank()
         }
     }
+    fun updateUiState(detailsSiswa: DetailsSiswa) {
+        uiStateSiswa =
+            UIStateSiswa(detailsSiswa = detailsSiswa, isEntryValid = validasiInput(detailsSiswa))
+    }
