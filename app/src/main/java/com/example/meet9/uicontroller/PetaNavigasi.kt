@@ -11,8 +11,15 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import com.example.meet9.R
+import com.example.meet9.view.DestinasiHome
+import com.example.meet9.view.DestinasiEntry
+import com.example.meet9.view.HomeScreen
+import com.example.meet9.view.EntrySiswaScreen
 
 
 @Composable
@@ -43,4 +50,22 @@ fun SiswaTopAppBar(
             }
         }
     )
+}
+
+@Composable
+fun HostNavigasi(
+    navController: NavHostController,
+    modifier: Modifier = Modifier
+){
+    NavHost(navController=navController, startDestination = DestinasiHome.route, modifier = Modifier)
+    {
+        composable(DestinasiHome.route){
+            HomeScreen(
+                navigateToItemEntry = {navController.navigate(DestinasiEntry.route)},
+            )
+        }
+        composable(DestinasiEntry.route){
+            EntrySiswaScreen(navigateBack = { navController.popBackStack()})
+        }
+    }
 }
