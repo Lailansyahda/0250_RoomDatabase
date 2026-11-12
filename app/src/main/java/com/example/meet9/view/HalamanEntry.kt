@@ -25,6 +25,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.meet9.R
 import com.example.meet9.uicontroller.DestinasiNavigasi
+import com.example.meet9.uicontroller.SiswaTopAppBar
+import com.example.meet9.viewmodel.EntryViewModel
+import com.example.meet9.viewmodel.PenyediaViewModel
+import com.example.meet9.viewmodel.UIStateSiswa
+import com.example.meet9.viewmodel.DetailsSiswa
+import com.example.meet9.viewmodel.toSiswa
 import kotlinx.coroutines.launch
 
 object DestinasiEntry: DestinasiNavigasi {
@@ -70,7 +76,7 @@ fun EntrySiswaScreen(
 
 @Composable
 fun EntrySiswaBody(
-    uiStateSiswa: UiStateSiswa,
+    uiStateSiswa: UIStateSiswa,
     onSiswaValueChange: (DetailsSiswa) -> Unit,
     onSaveClick: () -> Unit,
     modifier: Modifier = Modifier
