@@ -1,24 +1,26 @@
 package com.example.meet9.viewmodel
 
-import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.example.meet9.repositori.RepositoriSiswa
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
-import com.example.meet9.uicontroller.DestinasiDetailSiswa
+import com.example.meet9.repositori.RepositoriSiswa
+import com.example.meet9.uicontroller.DestinasiEditSiswa
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class EditViewModel(
     savedStateHandle: SavedStateHandle,
-    private val repositoriSiswa: RepositoriSiswa): ViewModel() {
+    private val repositoriSiswa: RepositoriSiswa
+) : ViewModel() {
 
     var uiStateSiswa by mutableStateOf(UIStateSiswa())
         private set
 
-    private val idSiswa: Int = checkNotNull(savedStateHandle[DestinasiDetailSiswa.itemIdArg])
+    private val idSiswa: Int = checkNotNull(savedStateHandle[DestinasiEditSiswa.itemIdArg])
 
     init {
         viewModelScope.launch {
@@ -34,15 +36,15 @@ class EditViewModel(
             UIStateSiswa(detailsSiswa = detailsSiswa, isEntryValid = validasiInput(detailsSiswa))
     }
 
-    private fun validasiInput(uiStateSiswa: DetailsSiswa = uiStateSiswa.detailsSiswa): Boolean {
+    private fun validasiInput(uiState: DetailsSiswa = uiStateSiswa.detailsSiswa): Boolean {
         return with(uiState) {
             nama.isNotBlank() && alamat.isNotBlank() && telpon.isNotBlank()
         }
     }
 
     suspend fun updateSiswa() {
-        if (validasiInput(uiStateSiswa.detailSiswa)) {
-            repositoriSiswa.updateSiswa(uiStateSiswa.detailSiswa.toSiswa())
+        if (validasiInput(uiStateSiswa.detailsSiswa)) {
+            repositoriSiswa.updateSiswa(uiStateSiswa.detailsSiswa.toSiswa())
         }
     }
 }
