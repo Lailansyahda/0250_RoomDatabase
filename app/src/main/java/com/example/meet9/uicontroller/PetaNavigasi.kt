@@ -13,13 +13,17 @@ import androidx.compose.material3.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.example.meet9.R
-import com.example.meet9.view.DestinasiHome
-import com.example.meet9.view.DestinasiEntry
+import com.example.meet9.uicontroller.DestinasiDetailSiswa.itemIdArg
+import com.example.meet9.view.DetailSiswaScreen
+import com.example.meet9.view.EditSiswaScreen
 import com.example.meet9.view.HomeScreen
 import com.example.meet9.view.EntrySiswaScreen
+import com.example.meet9.view.route.DestinasiHome
 
 
 @Composable
@@ -62,10 +66,30 @@ fun HostNavigasi(
         composable(DestinasiHome.route){
             HomeScreen(
                 navigateToItemEntry = {navController.navigate(DestinasiEntry.route)},
+                navigateToItemUpdate = {navController.navigate("${DestinasiDetailSiswa.route}/${it}")}
             )
         }
         composable(DestinasiEntry.route){
             EntrySiswaScreen(navigateBack = { navController.popBackStack()})
+        }
+        composable (route = DestinasiDetailSiswa.routeWithArgs,
+            arguments = listOf(navArgument(itemIdArg){
+                type = NavType.IntType
+            })
+        ) {
+            DetailSiswaScreen(
+                navigateToEditItem = { navController.navigate("${DestinasiDetailSiswa.route}/$it") },
+                navigateBack = { navController.navigateUp() }
+            )
+        }
+        composable(route= DestinasiEditSiswa.routeWithArgs,
+            arguments = listOf(navArgument(DestinasiEditSiswa.itemIdArg){
+                type= NavType.IntType
+            })){
+            EditSiswaScreen(
+                navigateBack = {navController.popBackStack()},
+                onNavigateUp = {navController.navigateUp()}
+            )
         }
     }
 }
