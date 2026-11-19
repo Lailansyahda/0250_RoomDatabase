@@ -22,7 +22,7 @@ class DetailViewModel(
         repositoriSiswa.getSiswaStream(idSiswa)
             .filterNotNull()
             .map {
-                DetailSiswaUiState(detailsSiswa = it.toDetailSiswa())
+                DetailSiswaUiState(detailsSiswa = it.toDetailsSiswa())
             }.stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
@@ -30,12 +30,16 @@ class DetailViewModel(
             )
 
     suspend fun deleteSiswa(){
-    repositoriSiswa.deleteSiswa(uiDetailState.value.detailSiswa.toSiswa())}
+    repositoriSiswa.deleteSiswa(uiDetailState.value.detailsSiswa.toSiswa())}
 
     companion object {
         private const val TIMEOUT_MILLIS = 5_000L
     }
 }
+
+data class DetailSiswaUiState(
+    val detailsSiswa: DetailsSiswa = DetailsSiswa()
+)
 
 
 
